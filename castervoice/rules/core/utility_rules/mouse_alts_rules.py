@@ -25,6 +25,6 @@ class MouseAlternativesRule(MappingRule):
     defaults = {"rough": True}
 
 
-def get_rule():
-    details = RuleDetails(name="mouse alternatives rule")
-    return MouseAlternativesRule, details
+# def get_rule():
+#     details = RuleDetails(name="mouse alternatives rule")
+#     return MouseAlternativesRule, details
