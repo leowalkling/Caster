@@ -17,92 +17,97 @@ from castervoice.lib.temporary import Store, Retrieve
 class Python(MergeRule):
 
     mapping = {
-        SymbolSpecs.IF:
+        "pie " + SymbolSpecs.IF:
             R(Key("i,f,space,colon,left")),
-        SymbolSpecs.ELSE:
+        "pie " + SymbolSpecs.ELSE:
             R(Text("else:") + Key("enter")),
         # (no switch in Python)
-        SymbolSpecs.BREAK:
+        "pie " + SymbolSpecs.BREAK:
             R(Text("break")),
-        SymbolSpecs.FOR_EACH_LOOP:
+        "pie " + SymbolSpecs.FOR_EACH_LOOP:
             R(Store() + Text("for  in :") + Key("left:5") +
               Retrieve(action_if_text="right:5")),
-        SymbolSpecs.FOR_LOOP:
+        "pie " + SymbolSpecs.FOR_LOOP:
             R(Store() + Text("for i in range(0, ):") + Key("left:2") +
               Retrieve(action_if_text="right:2")),
-        SymbolSpecs.WHILE_LOOP:
+        "pie " + SymbolSpecs.WHILE_LOOP:
             R(Store() + Text("while :") + Key("left") + Retrieve(action_if_text="right")),
         # (no do-while in Python)
-        SymbolSpecs.TO_INTEGER:
+        "pie " + SymbolSpecs.TO_INTEGER:
             R(Store() + Text("int()") + Key("left") + Retrieve(action_if_text="right")),
-        SymbolSpecs.TO_FLOAT:
+        "pie " + SymbolSpecs.TO_FLOAT:
             R(Store() + Text("float()") + Key("left") + Retrieve(action_if_text="right")),
-        SymbolSpecs.TO_STRING:
+        "pie " + SymbolSpecs.TO_STRING:
             R(Store() + Text("str()") + Key("left") + Retrieve(action_if_text="right")),
-        SymbolSpecs.AND:
+        "pie " + SymbolSpecs.AND:
             R(Text(" and ")),
-        SymbolSpecs.OR:
+        "pie " + SymbolSpecs.OR:
             R(Text(" or ")),
-        SymbolSpecs.NOT:
+        "pie " + SymbolSpecs.NOT:
             R(Text("!")),
-        SymbolSpecs.SYSOUT:
+        "pie " + SymbolSpecs.SYSOUT:
             R(Store() + Text("print()") + Key("left") + Retrieve(action_if_text="right")),
-        SymbolSpecs.IMPORT:
+        "pie " + SymbolSpecs.IMPORT:
             R(Text("import ")),
-        SymbolSpecs.FUNCTION:
+        "pie " + SymbolSpecs.FUNCTION:
             R(Store() + Text("def ():") + Key("left:3") +
               Retrieve(action_if_text="right:3")),
-        SymbolSpecs.CLASS:
+        "pie " + SymbolSpecs.CLASS:
             R(Store() + Text("class :") + Key("left") + Retrieve(action_if_text="right")),
-        SymbolSpecs.COMMENT:
+        "pie " + SymbolSpecs.COMMENT:
             R(Store() + Text("#") + Key("space") + Retrieve(action_if_text="right")),
-        SymbolSpecs.LONG_COMMENT:
+        "pie " + SymbolSpecs.LONG_COMMENT:
             R(Store() + Text("''''''") + Key("left:3") +
               Retrieve(action_if_text="right:3")),
-        SymbolSpecs.NULL:
+        "pie " + SymbolSpecs.NULL:
             R(Text("None")),
-        SymbolSpecs.RETURN:
+        "pie " + SymbolSpecs.RETURN:
             R(Text("return ")),
-        SymbolSpecs.TRUE:
+        # SymbolSpecs.TRUE:
+        #     R(Text("True")),
+        # SymbolSpecs.FALSE:
+        #     R(Text("False")),
+        "pie true":
             R(Text("True")),
-        SymbolSpecs.FALSE:
+        "pie false":
             R(Text("False")),
 
         # Python specific
-        "sue iffae":
+        "pie iffae":
             R(Text("if ")),
-        "sue shells":
+        "pie shells":
             R(Text("else ")),
-        "from":
+        "pie from":
             R(Text("from ")),
-        "self":
+        "pie self":
             R(Text("self")),
-        "long not":
+        "pie long not":
             R(Text(" not ")),
-        "it are in":
+        "pie is in":
             R(Text(" in ")),
-        "shell iffae | LFA":
+        "pie (shell iffae | LFA)":
             R(Key("e,l,i,f,space,colon,left")),
-        "convert to character":
+        "pie convert to (character | char)":
             R(Store() + Text("chr()") + Key("left") + Retrieve(action_if_text="right")),
-        "length of":
+        "pie length of":
             R(Store() + Text("len()") + Key("left") + Retrieve(action_if_text="right")),
-        "global":
+        "pie global":
             R(Text("global ")),
-        "make assertion":
+        "pie assertion":
             R(Text("assert ")),
-        "list (comprehension | comp)":
+        "pie list (comprehension | comp)":
             R(Text("[x for x in TOKEN if TOKEN]")),
-        "[dot] (pie | pi)":
-            R(Text(".py")),
-        "toml":
-            R(Text("toml")),
-        "jason":
-            R(Text("toml")),
-        "identity is":
+        # "dot (pie | pi)":
+        #     R(Text(".py")),
+        # "coding toml":
+        #     R(Text("toml")),
+        # "coding jason":
+        #     R(Text("json")),
+        "pie is":
             R(Text(" is ")),
-        "yield":
+        "pie yield":
             R(Text("yield ")),
+        "pie dictionary": R(Text("dict")),
 
         # Essentially an improved version of the try catch command above
         # probably a better option than this is to use snippets with tab stops
@@ -110,37 +115,37 @@ class Python(MergeRule):
         # going into the command pallet (cs-p) and typing in "insert snippet"
         # then press enter and then you have choices of snippets show up in the drop-down list.
         # you can also make your own snippets.
-        "try [<exception>]":
+        "pie " + "try [<exception>]":
             R(
                 Text("try : ") + Pause("10") + Key("enter/2") +
                 Text("except %(exception)s:") + Pause("10") + Key("enter/2")),
-        "try [<exception>] as":
+        "pie " + "try [<exception>] as":
             R(
                 Text("try :") + Pause("10") + Key("enter/2") +
                 Text("except %(exception)s as :") + Pause("10") + Key("enter/2")),
 
         # class and class methods
-        "sub class":
+        "pie sub class":
             R(Store() + Text("class ():") + Key("left:3") +
               Retrieve(action_if_text="right:3")),
-        "dunder":
+        "pie dunder":
             R(Store() + Text("____()") + Key("left:4") +
               Retrieve(action_if_text="right:4")),
-        "init":
+        "pie init":
             R(Store() + Text("__init__()") + Key("left") +
               Retrieve(action_if_text="right")),
-        "meth [<binary_meth>]":
+        "pie meth <binary_meth>":
             R(Text("__%(binary_meth)s__(self, other):")),
-        "meth [<unary_meth>]":
-            R(Text("__%(unary_meth)s__(self):")),
+        "pie meth [<unary_meth>]":
+            R(Text("%(unary_meth)s(self):")),
     }
 
     extras = [
         Dictation("text"),
         Choice("unary_meth", {
-            "reper": "repr",
-            "stir": "str",
-            "len": "len",
+            "reper": "__repr__",
+            "stir": "__str__",
+            "len": "__len__",
         }),
         Choice("binary_meth", {
             "add": "add",

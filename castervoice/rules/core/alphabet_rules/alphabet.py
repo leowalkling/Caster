@@ -22,7 +22,7 @@ class Alphabet(MergeRule):
     extras = [
         alphabet_support.get_alphabet_choice("letter"),
         Choice("big", {
-            "big": True,
+            "(big | wig)": True,
         }),
     ]
     defaults = {

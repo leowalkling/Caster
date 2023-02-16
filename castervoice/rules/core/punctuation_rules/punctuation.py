@@ -33,7 +33,8 @@ class Punctuation(MergeRule):
         "bam [<npunc>]":
             R(Text(". "))*Repeat(extra="npunc"),
         "ace [<npunc100>]":
-            R(Text(" "))*Repeat(extra="npunc100"),
+            R(Key("space"))*Repeat(extra="npunc100"),
+            # R(Text(" "))*Repeat(extra="npunc100"),
     }
 
     extras = [

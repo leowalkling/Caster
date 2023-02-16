@@ -7,13 +7,13 @@ from castervoice.lib.merge.state.short import R
 
 class PythonNon(MappingRule):
     mapping = {
-        "with":
+        "pie " + "with":
             R(Text("with ")),
-        "open file":
+        "pie " + "open file":
             R(Text("open('filename','r') as f:")),
-        "read lines":
+        "pie " + "read lines":
             R(Text("content = f.readlines()")),
-        "try catch":
+        "pie " + "try catch":
             R(
                 Text("try:") + Key("enter:2/10, backspace") + Text("except Exception:") +
                 Key("enter")),

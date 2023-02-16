@@ -82,6 +82,10 @@ def _validate_engine_path():
     try:
         from natlink import isNatSpeakRunning  # pylint: disable=import-error
     except ImportError:
+        # try:
+        #     import natlink  # pylint: disable=import-error
+        # except ImportError:
+        #     return ''
         return ''
     if os.path.isfile(_SETTINGS_PATH):
         with io.open(_SETTINGS_PATH, "rt", encoding="utf-8") as toml_file:

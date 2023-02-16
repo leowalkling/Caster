@@ -3,7 +3,7 @@ Created on Sep 1, 2015
 
 @author: synkarius
 '''
-from dragonfly import Mimic
+from dragonfly import Choice, Mimic
 
 from castervoice.lib.actions import Text, Key
 from castervoice.rules.ccr.standard import SymbolSpecs
@@ -16,122 +16,145 @@ from castervoice.lib.merge.state.short import R
 class CPP(MergeRule):
     pronunciation = "C plus plus"
 
+    PREFIX = "CPP"
+
     mapping = {
-        SymbolSpecs.IF:
+        PREFIX + SymbolSpecs.IF:
             R(Key("i, f, lparen, rparen, leftbrace, enter,up,left")),
-        SymbolSpecs.ELSE:
+        PREFIX + SymbolSpecs.ELSE:
             R(Key("e, l, s, e, leftbrace, enter")),
         #
-        SymbolSpecs.SWITCH:
+        PREFIX + SymbolSpecs.SWITCH:
             R(Text("switch(){\ncase : break;\ndefault: break;") + Key("up,up,left,left")),
-        SymbolSpecs.CASE:
+        PREFIX + SymbolSpecs.CASE:
             R(Text("case :") + Key("left")),
-        SymbolSpecs.BREAK:
+        PREFIX + SymbolSpecs.BREAK:
             R(Text("break;")),
-        SymbolSpecs.DEFAULT:
+        PREFIX + SymbolSpecs.DEFAULT:
             R(Text("default: ")),
         #
-        SymbolSpecs.DO_LOOP:
+        PREFIX + SymbolSpecs.DO_LOOP:
             R(Text("do {}") + Key("left, enter:2")),
-        SymbolSpecs.WHILE_LOOP:
+        PREFIX + SymbolSpecs.WHILE_LOOP:
             R(Text("while ()") + Key("left")),
-        SymbolSpecs.FOR_LOOP:
-            R(Text("for (int i=0; i<TOKEN; i++)")),
-        SymbolSpecs.FOR_EACH_LOOP:
-            R(Text("for_each (TOKEN, TOKEN, TOKEN);")),
+        PREFIX + SymbolSpecs.FOR_LOOP:
+            R(Text("for (std::ptrdiff_t i{0}; i < TOKEN; ++i)")),
+        PREFIX + SymbolSpecs.FOR_EACH_LOOP:
+            R(Text("for (const auto& TOKEN : TOKEN)")),
         #
-        SymbolSpecs.TO_INTEGER:
+        PREFIX + SymbolSpecs.TO_INTEGER:
             R(Text("(int)")),
-        SymbolSpecs.TO_FLOAT:
+        PREFIX + SymbolSpecs.TO_FLOAT:
             R(Text("(double)")),
-        SymbolSpecs.TO_STRING:
+        PREFIX + SymbolSpecs.TO_STRING:
             R(Text("std::to_string()") + Key("left")),
         #
-        SymbolSpecs.AND:
+        PREFIX + SymbolSpecs.AND:
             R(Text("&&")),
-        SymbolSpecs.OR:
+        PREFIX + SymbolSpecs.OR:
             R(Text("||")),
-        SymbolSpecs.NOT:
+        PREFIX + SymbolSpecs.NOT:
             R(Text("!")),
         #
-        SymbolSpecs.SYSOUT:
+        PREFIX + SymbolSpecs.SYSOUT:
             R(Text("cout <<")),
         #
-        SymbolSpecs.IMPORT:
+        PREFIX + SymbolSpecs.IMPORT:
             R(Text("#include")),
         #
-        SymbolSpecs.FUNCTION:
+        PREFIX + SymbolSpecs.FUNCTION:
             R(Text("TOKEN TOKEN(){}") + Key("left")),
-        SymbolSpecs.CLASS:
+        PREFIX + SymbolSpecs.CLASS:
             R(Text("class TOKEN{}") + Key("left")),
         #
-        SymbolSpecs.COMMENT:
+        PREFIX + SymbolSpecs.COMMENT:
             R(Text("//")),
-        SymbolSpecs.LONG_COMMENT:
+        PREFIX + SymbolSpecs.LONG_COMMENT:
             R(Text("/**/") + Key("left, left")),
         #
-        SymbolSpecs.NULL:
+        PREFIX + SymbolSpecs.NULL:
             R(Text("null")),
         #
-        SymbolSpecs.RETURN:
+        PREFIX + SymbolSpecs.RETURN:
             R(Text("return")),
         #
-        SymbolSpecs.TRUE:
+        PREFIX + SymbolSpecs.TRUE:
             R(Text("true")),
-        SymbolSpecs.FALSE:
+        PREFIX + SymbolSpecs.FALSE:
             R(Text("false")),
 
         # C++ specific
-        "public":
+        PREFIX + "public":
             R(Text("public ")),
-        "private":
+        PREFIX + "private":
             R(Text("private ")),
-        "static":
+        PREFIX + "static":
             R(Text("static ")),
-        "final":
+        PREFIX + "final":
             R(Text("final ")),
-        "static cast integer":
+        PREFIX + "inline":
+            R(Text("inline ")),
+        PREFIX + "static cast integer":
             R(Text("static_cast<int>()") + Key("left")),
-        "static cast double":
+        PREFIX + "static cast double":
             R(Text("static_cast<double>()") + Key("left")),
-        "([global] scope | name)":
+        PREFIX + "([global] scope | name)":
             R(Text("::")),
-        "Vic":
-            R(Text("vector")),
-        "pushback":
+        # PREFIX + "Vic":
+        #     R(Text("vector")),
+        PREFIX + "pushback":
             R(Text("push_back")),
-        "standard":
+        PREFIX + "standard":
             R(Text("std")),
-        "constant":
+        PREFIX + "constant":
             R(Text("const")),
-        "array":
+        PREFIX + "array":
             R(Mimic("brackets")),
 
         #http://www.learncpp.com/cpp-tutorial/67-introduction-to-pointers/
-        "(reference to | address of)":
+        PREFIX + "(reference to | address of)":
             R(Text("&")),
-        "(pointer | D reference)":
+        PREFIX + "(pointer | D reference)":
             R(Text("*")),
-        "member":
+        PREFIX + "member":
             R(Text("->")),
-        "new new":
+        PREFIX + "new new":
             R(Text("new ")),
-        "integer":
+        PREFIX + "integer":
             R(Text("int ")),
-        "double":
+        PREFIX + "double":
             R(Text("double ")),
-        "character":
+        PREFIX + "character":
             R(Text("char ")),
-        "big integer":
+        PREFIX + "big integer":
             R(Text("Integer")),
-        "string":
+        PREFIX + "string":
             R(Text("string ")),
-        "ternary":
+        PREFIX + "ternary":
             R(Text("()?;") + (Key("left")*3)),
+            
+        # Customized
+        PREFIX + "[<signedness>] int <nbits>": R(Text("std::%(signedness)sint%(nbits)s_t")),
+        PREFIX + "PTR diff": R(Text("std::ptrdiff_t")),
+        PREFIX + "deckle val":
+            R(Text("std::declval")),
     }
 
-    extras = []
-    defaults = {}
+    extras = [
+        Choice("signedness", {
+            "(U | you)": "u",
+            "(S | signed)": "",
+        }),
+        Choice("nbits", {
+            "(eight | 8)": "8",
+            "(sixteen | 16)": "16",
+            "(thirty two | 32)": "32",
+            "(sixty four | 64)": "64"
+        }),
+    ]
+    defaults = {
+        "signedness": "",
+    }
 
 
 def get_rule():

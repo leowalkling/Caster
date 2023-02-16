@@ -3,6 +3,11 @@ from castervoice.lib import printer
 
 if get_engine().name == 'natlink':
     import natlink
+# if get_current_engine().name == 'natlink':
+#     try:
+#         from natlinkcore import natlink
+#     except ImportError:
+#         import natlink  # pylint: disable=import-error
 
 
 class EngineModesManager(object):

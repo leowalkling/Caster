@@ -42,7 +42,7 @@ class NavigationNon(MappingRule):
             R(Function(navigation.right_down)),
         "hoist":
             R(Function(navigation.right_up)),
-        "kick mid":
+        "(kick mid | pick mid)":
             R(Function(navigation.middle_click)),
         "shift right click":
             R(Key("shift:down") + Mouse("right") + Key("shift:up")),
@@ -95,8 +95,6 @@ class NavigationNon(MappingRule):
             R(Key("c-pgup"))*Repeat(extra="n"),
         "close tab [<n>]":
             R(Key("c-w/20"))*Repeat(extra="n"),
-        "elite translation <text>":
-            R(Function(alphabet_support.elite_text)),
     }
 
     extras = [
@@ -116,7 +114,7 @@ class NavigationNon(MappingRule):
         navigation_support.get_direction_choice("direction2"),
         navigation_support.TARGET_CHOICE,
         Choice("dokick", {
-            "kick": 1,
+            "(kick | glick | pick)": 1,
             "psychic": 2
         }),
         Choice("wm", {
