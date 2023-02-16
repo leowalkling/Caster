@@ -212,7 +212,7 @@ def reboot():
         printer.out(popen_parameters)
         subprocess.Popen(popen_parameters)
     if engine.name == 'natlink':
-        import natlinkstatus # pylint: disable=import-error
+        from natlinkcore import natlinkstatus # pylint: disable=import-error
         status = natlinkstatus.NatlinkStatus()
         if status.NatlinkIsEnabled() == 1:
             # Natlink in-process
@@ -272,7 +272,7 @@ def clear_log():
         else:
             clearcmd = "clear" # Linux
         if get_current_engine().name == 'natlink':
-            import natlinkstatus  # pylint: disable=import-error
+            from natlinkcore import natlinkstatus  # pylint: disable=import-error
             status = natlinkstatus.NatlinkStatus()
             if status.NatlinkIsEnabled() == 1:
                 import win32gui  # pylint: disable=import-error

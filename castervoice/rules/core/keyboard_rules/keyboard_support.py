@@ -17,7 +17,7 @@ right_spec = "(right | ross)"
 left_spec = "(left | lease)"
 shift_spec = "(shift | shin)"
 control_spec = "(control | fly)"
-alt_spec = "alt"
+alt_spec = "(alt | altar | wahr)"
 windows_spec = "windows"
 
 # Modifier key names 

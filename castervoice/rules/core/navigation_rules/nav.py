@@ -57,7 +57,7 @@ class Navigation(MergeRule):
                     S(["cancel"], lambda: None),
                     S(["*"],
                       lambda fnparams: UntilCancelled(
-                          Mimic(*filter(lambda s: s != "periodic", fnparams)), 1).execute(
+                          Mimic(*filter(lambda s: s != "periodic", fnparams)), 0.66).execute(
                           ),
                       use_spoken=True))
             ]),
@@ -139,11 +139,11 @@ class Navigation(MergeRule):
               rdescript="Core: switch to most recent Windows"),
 
         # Ccr Mouse Commands
-        "kick [<nnavi3>]":
+        "(kick | glick | pick) [<nnavi3>]":
             R(Function(navigation.left_click))*Repeat(extra="nnavi3"),
         "psychic":
             R(Function(navigation.right_click)),
-        "(kick double|double kick)":
+        "(kick double|pick double)":
             R(Function(navigation.left_click)*Repeat(2)),
         "squat":
             R(Function(navigation.left_down)),
@@ -199,7 +199,7 @@ class Navigation(MergeRule):
     button_dictionary_500_modifier = { 
         key:value for key, value in keyboard_support.button_dictionary_1.items() if value in [
             "backspace", "del", "enter", "left", "right", "up", "down", "pgdown", "pgup"
-            ]
+            ] or value in "abcdefghijklmnopqrstuvwxyz"
     }
     button_dictionary_1_modifier = { 
         key:value for key, value in keyboard_support.button_dictionary_1.items() if value in [

@@ -92,9 +92,12 @@ def _validate_engine_path():
     if not sys.platform.startswith('win'):
         return ''
     try:
-        import natlink  # pylint: disable=import-error
+        from natlinkcore import natlink  # pylint: disable=import-error
     except ImportError:
-        return ''
+        try:
+            import natlink  # pylint: disable=import-error
+        except ImportError:
+            return ''
     if os.path.isfile(_SETTINGS_PATH):
         with io.open(_SETTINGS_PATH, "rt", encoding="utf-8") as toml_file:
             data = tomlkit.loads(toml_file.read()).value

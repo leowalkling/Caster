@@ -221,9 +221,16 @@ left_up      = lambda: mouse_click("left:up")
 right_down   = lambda: mouse_click("right:down")
 right_up     = lambda: mouse_click("right:up")
 
+mouse_wheel_direction_mapping = {
+    "up": "wheelup",
+    "down": "wheeldown",
+    "right": "wheelright",
+    "left": "wheelleft"
+}
+
 
 def wheel_scroll(direction, nnavi500):
-    wheel = "wheelup" if direction == "up" else "wheeldown"
+    wheel = mouse_wheel_direction_mapping[direction]
     for i in range(1, abs(nnavi500) + 1):
         Mouse("{}:1/10".format(wheel)).execute()
 

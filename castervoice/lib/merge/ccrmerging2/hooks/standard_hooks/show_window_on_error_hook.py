@@ -11,7 +11,7 @@ def show_window():
     title = None
     engine = get_current_engine().name
     if engine == 'natlink':
-        import natlinkstatus  # pylint: disable=import-error
+        from natlinkcore import natlinkstatus  # pylint: disable=import-error
         status = natlinkstatus.NatlinkStatus()
         if status.NatlinkIsEnabled() == 1:
             if six.PY2:

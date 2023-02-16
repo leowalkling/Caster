@@ -5,9 +5,9 @@ from castervoice.lib.actions import Key, Text
 
 def caster_alphabet():
     return {
-        "arch"    : "a",
+        "(arch | arve)"    : "a",
         "brov"    : "b",
-        "char"    : "c",
+        "(char | chart)"    : "c",
         "delta"   : "d",
         "echo"    : "e",
         "foxy"    : "f",
@@ -31,6 +31,9 @@ def caster_alphabet():
         "x-ray"   : "x",
         "yankee"  : "y",
         "Zulu"    : "z",
+        "ammo"    : "ä",
+        "awl man" : "ö",
+        "boomerang": "ü",
     }
 
 

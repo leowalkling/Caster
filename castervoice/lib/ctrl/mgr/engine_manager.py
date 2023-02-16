@@ -2,7 +2,10 @@ from dragonfly import get_current_engine
 from castervoice.lib import printer
 
 if get_current_engine().name == 'natlink':
-    import natlink
+    try:
+        from natlinkcore import natlink
+    except ImportError:
+        import natlink  # pylint: disable=import-error
 
 
 class EngineModesManager(object):
