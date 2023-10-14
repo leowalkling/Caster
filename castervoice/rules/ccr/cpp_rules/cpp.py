@@ -102,12 +102,24 @@ class CPP(MergeRule):
             R(Text("::")),
         # PREFIX + "Vic":
         #     R(Text("vector")),
+        PREFIX + "tuple":
+            R(Text("std::tuple")),
+        PREFIX + "amp optional":
+            R(Text("amp::optional")),
+        PREFIX + "amp static vector":
+            R(Text("amp::static_vector")),
         PREFIX + "pushback":
             R(Text("push_back")),
         PREFIX + "standard":
-            R(Text("std")),
+            R(Text("std::")),
+        PREFIX + "amp":
+            R(Text("amp::")),
+        PREFIX + "amp PMR":
+            R(Text("amp::pmr::")),
         PREFIX + "constant":
             R(Text("const")),
+        PREFIX + "typename": R(Text("typename")),
+        PREFIX + "auto": R(Text("auto")),
         PREFIX + "array":
             R(Mimic("brackets")),
 
