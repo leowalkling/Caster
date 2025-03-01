@@ -44,7 +44,9 @@ class Python(MergeRule):
         "pie " + SymbolSpecs.OR:
             R(Text(" or ")),
         "pie " + SymbolSpecs.NOT:
-            R(Text("!")),
+            R(Text("not ")),
+        "pie is " + SymbolSpecs.NOT:
+            R(Text("is not ")),
         "pie " + SymbolSpecs.SYSOUT:
             R(Store() + Text("print()") + Key("left") + Retrieve(action_if_text="right")),
         "pie " + SymbolSpecs.IMPORT:
@@ -59,7 +61,11 @@ class Python(MergeRule):
         "pie " + SymbolSpecs.LONG_COMMENT:
             R(Store() + Text("''''''") + Key("left:3") +
               Retrieve(action_if_text="right:3")),
-        "pie " + SymbolSpecs.NULL:
+        # "pie " + SymbolSpecs.NULL:
+        #     R(Text("None")),
+        "pie is instance":
+            R(Text("isinstance()") + Key("left")),
+        "pie none":
             R(Text("None")),
         "pie " + SymbolSpecs.RETURN:
             R(Text("return ")),
@@ -132,12 +138,12 @@ class Python(MergeRule):
             R(Store() + Text("____()") + Key("left:4") +
               Retrieve(action_if_text="right:4")),
         "pie init":
-            R(Store() + Text("__init__()") + Key("left") +
-              Retrieve(action_if_text="right")),
+            R(Store(remove_cr=True) + Text("__init__(self, )") + Key("left") +
+              Retrieve(action_if_no_text="backspace:2, right", action_if_text="right")),
         "pie meth <binary_meth>":
             R(Text("__%(binary_meth)s__(self, other):")),
-        "pie meth [<unary_meth>]":
-            R(Text("%(unary_meth)s(self):")),
+        "pie meth":
+            R(Text("(self):")),
     }
 
     extras = [

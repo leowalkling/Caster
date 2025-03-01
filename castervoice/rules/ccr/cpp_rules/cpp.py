@@ -75,8 +75,6 @@ class CPP(MergeRule):
         # PREFIX + "Vic":
         #     R(Text("vector")),
         PREFIX + "tuple": R(Text("std::tuple")),
-        PREFIX + "amp optional": R(Text("amp::optional")),
-        PREFIX + "amp static vector": R(Text("amp::static_vector")),
         PREFIX + "pushback": R(Text("push_back")),
         PREFIX + "standard": R(Text("std::")),
         PREFIX + "amp": R(Text("amp::")),
@@ -137,11 +135,13 @@ class CPP(MergeRule):
         Choice(
             "std_entity",
             {
+                "back inserter": "back_inserter(",
                 "begin": "begin(",
                 "end": "end(",
                 "move": "move(",
-                "back inserter": "back_inserter(",
                 "numeric limits": "numeric_limits<>(",
+                "tuple": "tuple<>",
+                "vector": "vector<>",
             },
         ),
         Choice(

@@ -114,7 +114,7 @@ class NavigationNon(MappingRule):
         navigation_support.get_direction_choice("direction2"),
         navigation_support.TARGET_CHOICE,
         Choice("dokick", {
-            "(kick | glick | pick)": 1,
+            "pick": 1,
             "psychic": 2
         }),
         Choice("wm", {

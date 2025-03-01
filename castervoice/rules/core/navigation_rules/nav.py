@@ -68,20 +68,20 @@ class Navigation(MergeRule):
             time_in_seconds=0.2, repetitions=50 ),
         "jump in":
             AsynchronousAction([L(S(["cancel"], context.nav, ["right", "(~[~{~<"]))],
-                               time_in_seconds=0.1,
+                               time_in_seconds=0.05,
                                repetitions=50),
         "jump out":
             AsynchronousAction([L(S(["cancel"], context.nav, ["right", ")~]~}~>"]))],
-                               time_in_seconds=0.1,
+                               time_in_seconds=0.05,
                                repetitions=50),
         "jump back":
             AsynchronousAction([L(S(["cancel"], context.nav, ["left", "(~[~{~<"]))],
-                               time_in_seconds=0.1,
+                               time_in_seconds=0.05,
                                repetitions=50),
         "jump back in":
             AsynchronousAction([L(S(["cancel"], context.nav, ["left", "(~[~{~<"]))],
                                finisher=Key("right"),
-                               time_in_seconds=0.1,
+                               time_in_seconds=0.05,
                                repetitions=50),
 
         # keyboard shortcuts
@@ -101,6 +101,8 @@ class Navigation(MergeRule):
             R(Key("escape"), rspec="cancel"),
         "shackle":
             R(Key("home/5, s-end"), rspec="shackle"),
+        "shackle full":
+            R(Key("home, home/5, s-end, s-right"), rspec="shackle full"),
         "(tell | tau) <semi>":
             R(Function(navigation.next_line), rspec="tell dock"),
         "(hark | heart) <semi>":
@@ -139,11 +141,11 @@ class Navigation(MergeRule):
               rdescript="Core: switch to most recent Windows"),
 
         # Ccr Mouse Commands
-        "(kick | glick | pick) [<nnavi3>]":
+        "pick [<nnavi3>]":
             R(Function(navigation.left_click))*Repeat(extra="nnavi3"),
         "psychic":
             R(Function(navigation.right_click)),
-        "(kick double|pick double)":
+        "pick double":
             R(Function(navigation.left_click)*Repeat(2)),
         "squat":
             R(Function(navigation.left_down)),
