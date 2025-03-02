@@ -7,6 +7,7 @@ from castervoice.lib.const import CCRType
 from castervoice.lib.context import AppContext
 from castervoice.lib.ctrl.mgr.rules_enabled_diff import RulesEnabledDiff
 from castervoice.lib.merge.ccrmerging2.merge_result import MergeResult
+from dragonfly.engines import get_current_engine
 
 
 class CCRMerger2(object):
@@ -211,11 +212,13 @@ class CCRMerger2(object):
                 _original = extras[CCRMerger2._ORIGINAL] if CCRMerger2._ORIGINAL in extras else None
                 _sequence = extras[CCRMerger2._SEQ] if CCRMerger2._SEQ in extras else None
                 _terminal = extras[CCRMerger2._TERMINAL] if CCRMerger2._TERMINAL in extras else None
-                if _original is not None: _original.execute()
-                if _sequence is not None:
-                    for action in _sequence:
-                        action.execute()
-                if _terminal is not None: _terminal.execute()
+                def _impl():
+                    if _original is not None: _original.execute()
+                    if _sequence is not None:
+                        for action in _sequence:
+                            action.execute()
+                    if _terminal is not None: _terminal.execute()
+                fut = get_current_engine()._action_executor.submit(_impl)
 
         return RepeatRule(name=self._get_new_rule_name())
 
